@@ -1,6 +1,10 @@
+using FarmaApi.DTOs;
+using FarmaApi.Models;
+
 namespace FarmaApi.Interfaces;
 
-public class IProductService
+public interface IProductService
 {
-    
+    public List<Product> GetProducts();
+    public Product GetProduct(CreateProductDTO dto);
 }
