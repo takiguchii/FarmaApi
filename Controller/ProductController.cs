@@ -3,7 +3,7 @@ using FarmaApi.Interfaces;
 using FarmaApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FarmaAPI.Controllers // << Corrija esta linha
+namespace FarmaAPI.Controllers 
 {
     [ApiController]
     [Route("[controller]")]
