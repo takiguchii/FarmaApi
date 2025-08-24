@@ -6,27 +6,29 @@ namespace FarmaApi.Service;
 
 public class ClientService : IClientService
 {
+    private readonly List<Client> _clients = new List<Client>();
+    private int _nextId = 1;
+
+    public ClientService()
+    {
+        _clients.Add(new Client { id = _nextId++, Name = "João da Silva", Email = "joao@email.com" });
+        _clients.Add(new Client { id = _nextId++, Name = "Maria Souza", Email = "maria@email.com" });
+    }
+
     public Client CreateClient(CreateClientDTO dto)
     {
-        // Lógica para criar um cliente
-        // Exemplo: Salvar no "banco de dados" em memória
         Client newClient = new Client
         {
+            id = _nextId++, 
             Name = dto.Name,
             Email = dto.Email
         };
-        newClient.id = 1; // ID fixo para exemplo
+        _clients.Add(newClient); // Salvando clientes na litsa
         return newClient;
     }
 
     public List<Client> GetClients()
     {
-        // Lógica para obter clientes
-        // Exemplo: Retornar uma lista de clientes
-        return new List<Client>
-        {
-            new Client { id = 1, Name = "João da Silva", Email = "joao@email.com" },
-            new Client { id = 2, Name = "Maria Souza", Email = "maria@email.com" }
-        };
+        return _clients; // Retorna a lista com todos os clientes
     }
 }
