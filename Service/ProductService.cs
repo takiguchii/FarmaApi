@@ -9,6 +9,12 @@ public class ProductService : IProductService
     private readonly List<Product> _products = new List<Product>();
     private int _nextId = 1;
 
+    public ProductService()
+    {
+        _products.Add(new Product{ id = _nextId++, Name = "Arroz", Description = "Arroz vale branco"});
+        _products.Add(new Product{ id = _nextId++, Name = "feijão", Description = "Feijão preto"});
+    }
+
     public Product CreateProduct(CreateProductDTO dto)
     {
         Product newProduct = new Product
