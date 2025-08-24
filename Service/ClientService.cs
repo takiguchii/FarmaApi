@@ -19,16 +19,16 @@ public class ClientService : IClientService
     {
         Client newClient = new Client
         {
-            id = _nextId++, 
+            id = _nextId++,
             Name = dto.Name,
             Email = dto.Email
         };
-        _clients.Add(newClient); // Salvando clientes na litsa
+        _clients.Add(newClient); // Adicionando um novo cliente a lista 
         return newClient;
     }
 
     public List<Client> GetClients()
     {
-        return _clients; // Retorna a lista com todos os clientes
+        return _clients; // retornando a lista 
     }
 }

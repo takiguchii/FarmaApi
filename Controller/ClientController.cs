@@ -1,32 +1,32 @@
 using FarmaApi.DTOs;
-using FarmaApi.Interfaces; // Importamos a Interface, não a classe
+using FarmaApi.Interfaces;
+using FarmaApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FarmaApi.Controller;
-
-[ApiController]
-[Route("[controller]")]
-public class ClientController : ControllerBase
+namespace FarmaApi.Controller
 {
-    private IClientService _clientService; // Apontamos para a Interface
-
-    public ClientController(IClientService clientService)
+    [ApiController]
+    [Route("[controller]")]
+    public class ClientController : ControllerBase
     {
-        // A dependência é recebida como parâmetro
-        _clientService = clientService;
-    }
+        private readonly IClientService _clientService;
+        public ClientController(IClientService clientService) 
+        {
+            _clientService = clientService;
+        }
 
-    [HttpGet(Name = "GetClients")]
-    public IActionResult GetClients()
-    {
-        var clients = _clientService.GetClients();
-        return Ok(clients);
-    }
+        [HttpGet(Name = "GetClients")]
+        public IActionResult GetClients()
+        {
+            List<Client> clients = _clientService.GetClients();
+            return Ok(clients);
+        }
 
-    [HttpPost(Name = "CreateClient")]
-    public IActionResult CreateClient(CreateClientDTO dto)
-    {
-        var client = _clientService.CreateClient(dto);
-        return Ok(client);
+        [HttpPost(Name = "CreateClient")]
+        public IActionResult CreateClient(CreateClientDTO dto)
+        {
+            Client client = _clientService.CreateClient(dto);
+            return Ok(client);
+        }
     }
 }
