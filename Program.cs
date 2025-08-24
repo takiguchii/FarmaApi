@@ -10,7 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IClientService, ClientService>();
-builder.Services.AddSingleton<IProductService, ProductService>(); // << Corrija esta linha
+builder.Services.AddSingleton<IProductService, ProductService>();
+builder.Services.AddSingleton<ISaleService, SaleService>();
+
 
 
 var app = builder.Build();
