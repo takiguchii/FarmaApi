@@ -1,19 +1,17 @@
+using FarmaApi.Data;
 using FarmaApi.Interfaces;
 using FarmaApi.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddSingleton<IClientService, ClientService>();
-builder.Services.AddSingleton<IProductService, ProductService>();
-builder.Services.AddSingleton<ISaleService, SaleService>();
-
-
+builder.Services.AddDbContext<FarmaApiContext>(options =>
+{
+    options.UseMySql(connectionString,
+        ServerVersion.AutoDetect(connectionString));
+});
 
 var app = builder.Build();
 
@@ -24,9 +22,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
