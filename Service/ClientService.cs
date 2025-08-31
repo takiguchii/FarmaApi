@@ -1,34 +1,34 @@
 using FarmaApi.DTOs;
 using FarmaApi.Interfaces;
 using FarmaApi.Models;
+using FarmaApi.Data;
 
 namespace FarmaApi.Service;
 
 public class ClientService : IClientService
 {
-    private readonly List<Client> _clients = new List<Client>();
-    private int _nextId = 1;
+    private readonly FarmaApiContext _dbContext;
 
-    public ClientService()
+    public ClientService(FarmaApiContext dbContext)
     {
-        _clients.Add(new Client { id = _nextId++, Name = "João da Silva", Email = "joao@email.com" });
-        _clients.Add(new Client { id = _nextId++, Name = "Maria Souza", Email = "maria@email.com" });
+        _dbContext = dbContext;
     }
 
     public Client CreateClient(CreateClientDTO dto)
     {
         Client newClient = new Client
         {
-            id = _nextId++,
             Name = dto.Name,
             Email = dto.Email
         };
-        _clients.Add(newClient); // Adicionando um novo cliente a lista 
+        
+        _dbContext.Clients.Add(newClient);
+        _dbContext.SaveChanges();
         return newClient;
     }
 
     public List<Client> GetClients()
     {
-        return _clients; // retornando a lista 
+        return _dbContext.Clients.ToList();
     }
 }
