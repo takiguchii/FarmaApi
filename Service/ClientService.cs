@@ -1,17 +1,20 @@
+
 using FarmaApi.DTOs;
 using FarmaApi.Interfaces;
 using FarmaApi.Models;
-using FarmaApi.Data;
+using FarmaApi.Repositories; 
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FarmaApi.Service;
 
 public class ClientService : IClientService
 {
-    private readonly FarmaApiContext _dbContext;
+    private readonly IClientRepository _clientRepository;
 
-    public ClientService(FarmaApiContext dbContext)
+    public ClientService(IClientRepository clientRepository)
     {
-        _dbContext = dbContext;
+        _clientRepository = clientRepository;
     }
 
     public Client CreateClient(CreateClientDTO dto)
@@ -21,14 +24,14 @@ public class ClientService : IClientService
             Name = dto.Name,
             Email = dto.Email
         };
-        
-        _dbContext.Clients.Add(newClient);
-        _dbContext.SaveChanges();
+
+        _clientRepository.Add(newClient);
+        _clientRepository.SaveChanges();
         return newClient;
     }
 
     public List<Client> GetClients()
     {
-        return _dbContext.Clients.ToList();
+        return _clientRepository.GetAll();
     }
 }
