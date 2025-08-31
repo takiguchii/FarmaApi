@@ -1,6 +1,7 @@
 using FarmaApi.Interfaces;
 using FarmaApi.Service;
 using FarmaApi.Data;
+using FarmaApi.Repositories; 
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,12 @@ builder.Services.AddDbContext<FarmaApiContext>(options =>
         ServerVersion.AutoDetect(connectionString));
 });
 
+// Injetando as interfaces de repositório
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+
+// Injetando as interfaces de serviço
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
@@ -20,7 +27,6 @@ builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
