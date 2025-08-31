@@ -1,34 +1,36 @@
 using FarmaApi.DTOs;
 using FarmaApi.Interfaces;
 using FarmaApi.Models;
+using FarmaApi.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FarmaApi.Service;
 
 public class ProductService : IProductService
 {
-    private readonly List<Product> _products = new List<Product>();
-    private int _nextId = 1;
+    private readonly FarmaApiContext _dbContext;
 
-    public ProductService()
+    public ProductService(FarmaApiContext dbContext)
     {
-        _products.Add(new Product{ id = _nextId++, Name = "Arroz", Description = "Arroz vale branco"});
-        _products.Add(new Product{ id = _nextId++, Name = "feijão", Description = "Feijão preto"});
+        _dbContext = dbContext;
     }
 
     public Product CreateProduct(CreateProductDTO dto)
     {
         Product newProduct = new Product
         {
-            id = _nextId++,
             Name = dto.Name,
             Description = dto.Description
         };
-        _products.Add(newProduct);
+
+        _dbContext.Products.Add(newProduct);
+        _dbContext.SaveChanges();
         return newProduct;
     }
 
     public List<Product> GetProducts()
     {
-        return _products;
+        return _dbContext.Products.ToList();
     }
 }
