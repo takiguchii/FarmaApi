@@ -3,6 +3,7 @@ using FarmaApi.Models;
 using FarmaApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System; // Adicione esta linha
 
 namespace FarmaApi.Repositories;
 
@@ -20,9 +21,10 @@ public class ClientRepository : IClientRepository
         return _dbContext.Clients.ToList();
     }
 
-    public Client GetById(int id)
+    // O erro estava aqui. O tipo de entrada foi mudado para Guid.
+    public Client GetById(Guid id)
     {
-        return _dbContext.Clients.FirstOrDefault(c => c.id == id);
+        return _dbContext.Clients.FirstOrDefault(c => c.Id == id);
     }
 
     public void Add(Client client)
