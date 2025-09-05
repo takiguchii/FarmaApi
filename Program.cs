@@ -30,6 +30,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Adicione este bloco para usar o seed data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<FarmaApiContext>();
+    context.Database.EnsureCreated();
+    SeedData.Initialize(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
