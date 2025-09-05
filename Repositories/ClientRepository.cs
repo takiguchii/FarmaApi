@@ -3,7 +3,7 @@ using FarmaApi.Models;
 using FarmaApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System; // Adicione esta linha
+using System; 
 
 namespace FarmaApi.Repositories;
 

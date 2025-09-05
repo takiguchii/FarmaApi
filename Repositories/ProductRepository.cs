@@ -3,7 +3,7 @@ using FarmaApi.Models;
 using FarmaApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System; // Adicione esta linha
+using System;
 
 namespace FarmaApi.Repositories;
 
@@ -21,7 +21,6 @@ public class ProductRepository : IProductRepository
         return _dbContext.Products.ToList();
     }
 
-    // O erro estava aqui. O tipo de entrada foi mudado para Guid.
     public Product GetById(Guid id)
     {
         return _dbContext.Products.FirstOrDefault(p => p.Id == id);
