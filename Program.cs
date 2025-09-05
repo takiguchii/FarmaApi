@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Adicione este bloco para usar o seed data
+// Bloco Da seed
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
