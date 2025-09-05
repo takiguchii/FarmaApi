@@ -3,6 +3,7 @@ using FarmaApi.Service;
 using FarmaApi.Data;
 using FarmaApi.Repositories; 
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,12 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
